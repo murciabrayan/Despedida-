@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superposición de Imágenes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Contenedor de los botones -->
+    <div id="botonera">
+        <button id="respuesta-btn" class="btn">Respuesta</button>
+        <div id="extra-botones">
+            <button id="sirvio-btn" class="btn btn-secundario" onclick="window.location.href='respuesta.html'">¿Sirvió?</button>
+            <button id="caja-btn" class="btn btn-secundario" onclick="window.location.href='respuesta.html'">No quiero nada, dame mi caja</button>
+        </div>
+    </div>
+
+    <!-- Contenedor de imágenes -->
+    <div id="contenedor-imagenes"></div>
+
+    <script>
+        let imagenes = Array.from({ length: 30 }, (_, i) => `fotos/${i + 1}.jpeg`);
+        let imagenesMostradas = [];
+        let imagenesDisponibles = [...imagenes];
+
+        function mostrarImagen() {
+            if (imagenesDisponibles.length === 0) {
+                imagenesDisponibles = [...imagenes]; 
+            }
+
+            const indice = Math.floor(Math.random() * imagenesDisponibles.length);
+            const imagenSeleccionada = imagenesDisponibles.splice(indice, 1)[0];
+
+            const img = document.createElement("img");
+            img.src = imagenSeleccionada;
+            img.classList.add("imagen");
+
+            // Tamaño aleatorio
+            const tamanos = [100, 150, 200, 250, 300];
+            const ancho = tamanos[Math.floor(Math.random() * tamanos.length)];
+            img.style.width = `${ancho}px`;
+
+            // Posición aleatoria en la pantalla
+            const x = Math.random() * (window.innerWidth - ancho);
+            const y = Math.random() * (window.innerHeight - ancho);
+            img.style.left = `${x}px`;
+            img.style.top = `${y}px`;
+
+            // Rotación aleatoria
+            const rotacion = Math.random() * 60 - 30; 
+            img.style.transform = `rotate(${rotacion}deg)`;
+
+            document.getElementById("contenedor-imagenes").appendChild(img);
+            imagenesMostradas.push(img);
+
+            if (imagenesMostradas.length > 20) {
+                let imgEliminar = imagenesMostradas.shift();
+                imgEliminar.style.opacity = "0";
+                setTimeout(() => imgEliminar.remove(), 500);
+            }
+        }
+
+        setInterval(mostrarImagen, 800);
+
+        // Ocultar botones extra al inicio
+        document.getElementById("extra-botones").style.display = "none";
+
+        // Mostrar botones extra solo cuando se presione "Respuesta"
+        document.getElementById("respuesta-btn").addEventListener("click", function() {
+            let extraBotones = document.getElementById("extra-botones");
+            extraBotones.style.display = extraBotones.style.display === "none" ? "flex" : "none";
+        });
+    </script>
+
+</body>
+</html>

@@ -1,78 +1,59 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Superposición de Imágenes</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Intento</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+    <div class="titulo">
+        <h1>Hola tu  </h1>
+    </div>
+    <div class="container">
+        <div id="paragraph1" class="paragraph">
+            <p>Creiste que iba a hacer una simple invitacion para que me terminaras bien,si pero no. </p>
+            <p>El ultimo recurso es esto que hice </p>
+            <img src="./fotos/gato.jpg" alt="Imagen 1" class="parrafo-imagen">
+        
+          
+        </div>
+        <div id="paragraph2" class="paragraph hidden">
+            <p>Se que no quieres verme y que estas mejor sin mi, pero queria agradecerte por todo lo que pasamos, vi un video y comprendi que es cierto, tu ayudase a hacer mi vida mejor y de cierto modo te convertiste en mi vida tambien, no se que estes haciendo, que estes pensando pero si hago esto es porque te quiero  y quiero estar contigo y con nadie mas </p>
+            <img src="./fotos/rana.jpg" alt="Imagen 2" class="imagen2">
+           
+        </div>
+        <div id="paragraph3" class="paragraph hidden">
+            <p>Lo que te dije por mensaje es cierto, si quieres dejar esto aqui voy a respetar tu descicion pero maira , quiero que seas tu la de siempre la que me lo diga, que estas enfocada en otra cosa, que ya no quiueres que te busque ni te escriba y asi te lo juro que lo voy hacer por el amor que te tengo</p>
+            <img src="./fotos/raton.jpg" alt="Imagen 3" class="imagen3"> 
 
-    <!-- Contenedor de los botones -->
-    <div id="botonera">
-        <button id="respuesta-btn" class="btn">Respuesta</button>
-        <div id="extra-botones">
-            <button id="sirvio-btn" class="btn btn-secundario">¿Sirvió?</button>
-            <button id="caja-btn" class="btn btn-secundario">No quiero nada , dame mi caja</button>
+           
+        </div>
+        <div id="paragraph4" class="paragraph hidden">
+            <p>Tan solo te lo pido dejame sanar a mi modo , con amor, si quieres seguirme odiando despues de eso puedes hacerlo, si quieres culparme tambien puedes hacerlo, al final siempre he querido que seas feliz, pero al menos la ultima vez deja que seamos tu y yo como siempre. Aunque tambien puedes negarte claro esta :P</p>
+            <p><a href="galeria.html">Sigue esto (Clickea aqui)</a>
+            </a>
+            </a>
+            <p>Te dejo la cosa que hice hace un tiempo solo para que la recuerdes mua haha :<a href="https://murciabrayan.github.io/cielo/">SOYYO</a>
+                </a>
+            </a>
+        </p>
+            
+           
+           
         </div>
     </div>
-
-    <!-- Contenedor de imágenes -->
-    <div id="contenedor-imagenes"></div>
-
+    <button class="boton" type="button" onclick="toggleParagraphs()">
+        <img class="imgboton" src="./fotos/flecha.png" alt="Botón de Siguiente">
+    </button>
     <script>
-        let imagenes = Array.from({ length: 30 }, (_, i) => `fotos/${i + 1}.jpeg`);
-        let imagenesMostradas = [];
-        let imagenesDisponibles = [...imagenes];
-
-        function mostrarImagen() {
-            if (imagenesDisponibles.length === 0) {
-                imagenesDisponibles = [...imagenes]; 
-            }
-
-            const indice = Math.floor(Math.random() * imagenesDisponibles.length);
-            const imagenSeleccionada = imagenesDisponibles.splice(indice, 1)[0];
-
-            const img = document.createElement("img");
-            img.src = imagenSeleccionada;
-            img.classList.add("imagen");
-
-            // Tamaño aleatorio
-            const tamanos = [100, 150, 200, 250, 300];
-            const ancho = tamanos[Math.floor(Math.random() * tamanos.length)];
-            img.style.width = `${ancho}px`;
-
-            // Posición aleatoria en la pantalla
-            const x = Math.random() * (window.innerWidth - ancho);
-            const y = Math.random() * (window.innerHeight - ancho);
-            img.style.left = `${x}px`;
-            img.style.top = `${y}px`;
-
-            // Rotación aleatoria
-            const rotacion = Math.random() * 60 - 30; 
-            img.style.transform = `rotate(${rotacion}deg)`;
-
-            document.getElementById("contenedor-imagenes").appendChild(img);
-            imagenesMostradas.push(img);
-
-            if (imagenesMostradas.length > 20) {
-                let imgEliminar = imagenesMostradas.shift();
-                imgEliminar.style.opacity = "0";
-                setTimeout(() => imgEliminar.remove(), 500);
-            }
+        let currentParagraph = 1;
+        function toggleParagraphs() {
+            document.getElementById('paragraph' + currentParagraph).classList.add('hidden');
+            currentParagraph = (currentParagraph % 4) + 1;
+            document.getElementById('paragraph' + currentParagraph).classList.remove('hidden');
         }
-
-        setInterval(mostrarImagen, 800);
-
-        // Ocultar botones extra al inicio
-        document.getElementById("extra-botones").style.display = "none";
-
-        // Mostrar botones extra solo cuando se presione "Respuesta"
-        document.getElementById("respuesta-btn").addEventListener("click", function() {
-            let extraBotones = document.getElementById("extra-botones");
-            extraBotones.style.display = extraBotones.style.display === "none" ? "flex" : "none";
-        });
     </script>
-
+ 
 </body>
 </html>
